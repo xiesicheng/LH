@@ -1,0 +1,10 @@
+.newItemBtn {
+  font-size: 2rem;
+  color:#40a9ff;
+  cursor: pointer;
+  user-select: none;
+}
+
+.newItemBtn:active {
+  color: #50bAff;
+}

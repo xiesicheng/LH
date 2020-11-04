@@ -1,0 +1,10 @@
+html, body, div {
+  margin: 0;
+  padding: 0;
+}
+
+.textShow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

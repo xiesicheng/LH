@@ -9,16 +9,15 @@ class EditTodoItemPanel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      inputValue: '',
-      dateString: ''
+      inputValue: this.props.inputValue || '',
+      dateString: this.props.dateString || ''
     }
     this.onInputChange = this.onInputChange.bind(this);
     this.onDateChange = this.onDateChange.bind(this);
     this.onOk = this.onOk.bind(this);
   }
   render() {
-    if (this.props.flag) {
-      return (
+    let component = this.props.flag ?
         <div className="AddPanel">
           <div className="Panel">
             <Input.TextArea
@@ -28,16 +27,17 @@ class EditTodoItemPanel extends React.Component {
               value={this.state.inputValue}
             />
             <div>
-              <DatePicker showTime onChange={this.onDateChange}/>
+              <DatePicker 
+                showTime 
+                value={this.dateString}
+                onChange={this.onDateChange}
+              />
               <Button onClick={this.onOk}>保存</Button>
               <Button onClick={this.props.handleAddExit}>退出</Button>
             </div>
           </div>
-        </div>
-      )
-    } else {
-      return <div></div>
-    }
+        </div> : null;
+    return component;
   }
   onInputChange(e) {
     this.setState(()=> ({
@@ -61,18 +61,25 @@ class EditTodoItemPanel extends React.Component {
     }
     if (flag) {
       // 添加数据
-      
-      const action = actionCreators.getAddTodoItemAction(this.state.inputValue, this.state.dateString);
-      store.dispatch(action);
-      
-      if(window.localStorage){
-        window.localStorage.setItem('list', JSON.stringify(store.getState().list));
+      if (this.props.onOk) { //利用Panel模块 处理edit事件
+        this.props.onOk(this.state.inputValue, this.state.dateString);
+        
+        if(window.localStorage){
+          window.localStorage.setItem('list', JSON.stringify(store.getState().list));
+        }
+      } else {
+        const action = actionCreators.getAddTodoItemAction(this.state.inputValue, this.state.dateString);
+        store.dispatch(action);
+        
+        if(window.localStorage){
+          window.localStorage.setItem('list', JSON.stringify(store.getState().list));
+        }
+  
+        this.setState(()=>({
+          inputValue: '',
+          dateString: ''
+        }));
       }
-
-      this.setState(()=>({
-        inputValue: '',
-        dateString: ''
-      }))
       this.props.handleAddExit();
     }
   }

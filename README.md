@@ -1,3 +1,9 @@
+使用create-react-app创建todolist项目
+包括搜索,添加,修改,查询,
+如果存在npm install出错， 需要删除package-lock.json
+然后再执行npm install
+如果出现空白页,需要设置package.json 中字段homePage: './'
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

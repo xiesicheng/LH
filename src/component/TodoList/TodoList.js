@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import TodoListUI from './TodoListUI';
 import actionCreators from '../../store/actionCreators'
 import store from '../../store/index.js'
-import AddTodoItemPanel from '../AddTodoItemPanel/AddTodoItemPanel';
+import EditTodoItemPanel from '../AddTodoItemPanel/EditTodoItemPanel';
 
 // import axios from 'axios';
 class TodoList extends Component {
@@ -40,7 +40,7 @@ class TodoList extends Component {
   render() {
     return (
       <Fragment>
-        <AddTodoItemPanel 
+        <EditTodoItemPanel 
           flag={this.state.panelFlag} 
           handleAddOk={this.handleAddOk}
           handleAddExit={this.handleAddExit}

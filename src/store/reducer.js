@@ -1,4 +1,4 @@
-import {ADD_TODO_ITEM, INIT_LIST_VALUE} from './actionType'
+import {ADD_TODO_ITEM, COMPLETE_TODO_ITEM, DELETE_TODO_ITEM, INIT_LIST_VALUE, EDIT_TODO_ITEM} from './actionType'
 
 const defaultState = {
   list: [
@@ -28,6 +28,26 @@ const reducer = (state = defaultState, action) => {
       time: action.dateString,
       status: 0
     })
+    return newState;
+  }
+  if (action.type === DELETE_TODO_ITEM) {
+    const newState = DeepClone(state);
+    newState.list.splice(action.index, 1);
+    return newState;
+  }
+  if (action.type === COMPLETE_TODO_ITEM) {
+    const newState = DeepClone(state);
+    newState.list[action.index].status = newState.list[action.index].status ? 0 : 1;
+    return newState;
+  }
+  if (action.type === EDIT_TODO_ITEM) {
+    const newState = DeepClone(state);
+    newState.list.splice(action.index, 1);
+    newState.list.push({
+      content: action.content,
+      time: action.dateString,
+      status: 0
+    });
     return newState;
   }
   return state;

@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
-import TodoItemUI from './TodoItemUI'
+import TodoItemUI from './TodoItemUI';
+import store from '../../store'
+import actionCreators from '../../store/actionCreators';
 /* params
   checked,
   content,
@@ -27,10 +29,22 @@ class TodoItem extends Component {
     )
   }
   handleDelete() {
-    console.log('delete'+this.props.index);
+    // console.log('delete'+this.props.index);
+    const action = actionCreators.getDeleteTodoItemAction(this.props.index);
+    store.dispatch(action);
+
+    if(window.localStorage){
+      window.localStorage.setItem('list', JSON.stringify(store.getState().list));
+    }
   }
   handleClick() {
-    console.log('click'+this.props.index)
+    // console.log('click'+this.props.index);
+    const action = actionCreators.getCompleteTodoItemAction(this.props.index);
+    store.dispatch(action);
+
+    if(window.localStorage){
+      window.localStorage.setItem('list', JSON.stringify(store.getState().list));
+    }
   }
   handleEdit() {
     console.log('edit'+this.props.index);

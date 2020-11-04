@@ -5,7 +5,7 @@ import store from '../../store'
 import actionCreators from '../../store/actionCreators'
 import './style.css'
 
-class AddTodoItemPanel extends React.Component {
+class EditTodoItemPanel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -77,4 +77,4 @@ class AddTodoItemPanel extends React.Component {
     }
   }
 }
-export default AddTodoItemPanel;
+export default EditTodoItemPanel;

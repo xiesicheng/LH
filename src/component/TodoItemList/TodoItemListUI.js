@@ -9,8 +9,8 @@ const TodoItemListUI = (props) => {
         style={{marginTop: '10px', width: '100%'}}
         bordered
         dataSource={props.list}
-        renderItem={(item, index) => (
-          <TodoItem itemStyle={props.itemStyle} content={item.content} time={item.time} checked={props.checked} index={index}></TodoItem>
+        renderItem={(item) => (
+          <TodoItem itemStyle={props.itemStyle} content={item.content} time={item.time} checked={props.checked} index={item.index}></TodoItem>
         )}
       />
     </div>

@@ -1,7 +1,6 @@
 import React from 'react';
 import {Input, Button} from 'antd';
 import { DatePicker } from 'antd';
-import moment from 'moment'
 import store from '../../store'
 import actionCreators from '../../store/actionCreators'
 import './style.css'
@@ -10,16 +9,16 @@ class EditTodoItemPanel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      inputValue: this.props.inputValue || '',
-      dateString: this.props.dateString || ''
+      inputValue: '',
+      dateString: ''
     }
     this.onInputChange = this.onInputChange.bind(this);
     this.onDateChange = this.onDateChange.bind(this);
     this.onOk = this.onOk.bind(this);
   }
   render() {
-    let time = this.state.dateString !== '' ? moment(this.state.dateString) : '';
-    let component = this.props.flag ?
+    if (this.props.flag) {
+      return (
         <div className="AddPanel">
           <div className="Panel">
             <Input.TextArea
@@ -29,18 +28,16 @@ class EditTodoItemPanel extends React.Component {
               value={this.state.inputValue}
             />
             <div>
-              <DatePicker 
-                showTime 
-                // value={this.dateString}
-                onChange={this.onDateChange}
-                value={time}
-              />
+              <DatePicker showTime onChange={this.onDateChange}/>
               <Button onClick={this.onOk}>保存</Button>
               <Button onClick={this.props.handleAddExit}>退出</Button>
             </div>
           </div>
-        </div> : null;
-    return component;
+        </div>
+      )
+    } else {
+      return null
+    }
   }
   onInputChange(e) {
     this.setState(()=> ({
@@ -64,25 +61,18 @@ class EditTodoItemPanel extends React.Component {
     }
     if (flag) {
       // 添加数据
-      if (this.props.onOk) { //利用Panel模块 处理edit事件
-        this.props.onOk(this.state.inputValue, this.state.dateString);
-        
-        if(window.localStorage){
-          window.localStorage.setItem('list', JSON.stringify(store.getState().list));
-        }
-      } else {
-        const action = actionCreators.getAddTodoItemAction(this.state.inputValue, this.state.dateString);
-        store.dispatch(action);
-        
-        if(window.localStorage){
-          window.localStorage.setItem('list', JSON.stringify(store.getState().list));
-        }
-  
-        this.setState(()=>({
-          inputValue: '',
-          dateString: ''
-        }));
+      
+      const action = actionCreators.getAddTodoItemAction(this.state.inputValue, this.state.dateString);
+      store.dispatch(action);
+      
+      if(window.localStorage){
+        window.localStorage.setItem('list', JSON.stringify(store.getState().list));
       }
+
+      this.setState(()=>({
+        inputValue: '',
+        dateString: ''
+      }))
       this.props.handleAddExit();
     }
   }

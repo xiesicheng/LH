@@ -42,11 +42,12 @@ const reducer = (state = defaultState, action) => {
   }
   if (action.type === EDIT_TODO_ITEM) {
     const newState = DeepClone(state);
+    let status = newState.list[action.index].status;
     newState.list.splice(action.index, 1);
     newState.list.push({
       content: action.content,
       time: action.dateString,
-      status: 0
+      status: status
     });
     return newState;
   }
